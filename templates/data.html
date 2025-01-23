@@ -12,18 +12,22 @@
 
         <div class="data-card">
             <h2>Outside Temperature</h2>
-            <div class="data-value" id="outside-temp">-- °C</div>
+            <div class="data-value">{{ sensor_data.outsideTemp }} °C</div>
         </div>
 
         <div class="data-card">
             <h2>Inside Temperature</h2>
-            <div class="data-value" id="inside-temp">-- °C</div>
+            <div class="data-value">{{ sensor_data.insideTemp }} °C</div>
         </div>
 
         <div class="data-card">
             <h2>Inside Humidity</h2>
-            <div class="data-value" id="inside-humidity">-- %</div>
+            <div class="data-value">{{ sensor_data.insideHumidity }} %</div>
         </div>
+
+        <form method="get" action="/data">
+            <button class="refresh-button">Refresh Data</button>
+        </form>
     </div>
 </body>
 </html>
