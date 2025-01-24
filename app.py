@@ -17,11 +17,15 @@ sensor_data = {
     "insideHumidity": 0
 }
 
-# Endpoint to receive JSON data from the Arduino
 @app.route('/update-data', methods=['POST'])
 def update_data():
     global sensor_data
+    # Ensure the request contains JSON data
     if request.is_json:
-        sensor_data = request.get_json()  # Update the global data
-        return jsonify({"message": "Data received successfully"}), 200
+        new_data = request.get_json()
+        # Validate and update the global sensor_data
+        if all(key in new_data for key in ["outsideTemp", "insideTemp", "insideHumidity"]):
+            sensor_data.update(new_data)
+            return jsonify({"message": "Data received successfully"}), 200
+        return jsonify({"error": "Missing required keys"}), 400
     return jsonify({"error": "Invalid data format"}), 400
