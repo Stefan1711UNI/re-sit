@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -19,13 +19,14 @@ sensor_data = {
 
 @app.route('/update-data', methods=['POST'])
 def update_data():
-    global sensor_data
-    # Ensure the request contains JSON data
-    if request.is_json:
-        new_data = request.get_json()
-        # Validate and update the global sensor_data
-        if all(key in new_data for key in ["outsideTemp", "insideTemp", "insideHumidity"]):
-            sensor_data.update(new_data)
-            return jsonify({"message": "Data received successfully"}), 200
-        return jsonify({"error": "Missing required keys"}), 400
-    return jsonify({"error": "Invalid data format"}), 400
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({"error": "No JSON data provided"}), 400
+    
+    # Process the data (print/log, etc.)
+    print(data)
+
+    # Respond with acknowledgment
+    return jsonify({"message": "Data received successfully", "data": data}), 200
+    
