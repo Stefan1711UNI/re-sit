@@ -19,6 +19,7 @@ sensor_data = {
 
 @app.route('/update-data', methods=['POST'])
 def update_data():
+    global sensor_data
     data = request.get_json()
     
     if not data:
@@ -26,6 +27,7 @@ def update_data():
     
     # Process the data (print/log, etc.)
     print(data)
+    sensor_data.update(data)
 
     # Respond with acknowledgment
     return jsonify({"message": "Data received successfully", "data": data}), 200
