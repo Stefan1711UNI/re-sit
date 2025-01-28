@@ -12,22 +12,31 @@
 
         <div class="data-card">
             <h2>Outside Temperature</h2>
-            <div class="data-value">{{ sensor_data.outsideTemp }} °C</div>
+            <div id = "outTemp" class="data-value">{{ sensor_data.outsideTemp }} °C</div>
         </div>
 
         <div class="data-card">
             <h2>Inside Temperature</h2>
-            <div class="data-value">{{ sensor_data.insideTemp }} °C</div>
+            <div id = "insideTemp" class="data-value">{{ sensor_data.insideTemp }} °C</div>
         </div>
 
         <div class="data-card">
             <h2>Inside Humidity</h2>
-            <div class="data-value">{{ sensor_data.insideHumidity }} %</div>
+            <div id = "insideHum" class="data-value">{{ sensor_data.insideHumidity }} %</div>
         </div>
-
-        <form method="get" action="/data">
-            <button class="refresh-button">Refresh Data</button>
-        </form>
     </div>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('/api/data');
+            const data = await response.json();
+
+            document.getElementById('outTemp').innerText = `${sensorData.outsideTemp} °C`;
+            document.getElementById('insideTemp').innerText = `${sensorData.insideTemp} °C`;
+            document.getElementById('insideHum').innerText = `${sensorData.insideHumidity} %`;
+        }
+        setInterval(fetchSensorData, 5000);
+        fetchSensorData();
+    </script>
 </body>
 </html>
