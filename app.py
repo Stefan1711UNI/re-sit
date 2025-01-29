@@ -31,7 +31,7 @@ with app.app_context():
 def index():
     return render_template('index.html')
 
-@app.route('/data')
+@app.route('/live_data')
 def data():
     return render_template('data.html', received_data=received_data)
 
@@ -74,7 +74,7 @@ def add_entry(dht22_temp,dht22_hum,lm35):
     db.session.commit()
 
 #data_view page
-@app.route('/data-view')
+@app.route('/data_view')
 def data_view():
     return render_template('data_view.html')
     
@@ -85,3 +85,11 @@ def get_sensor_data():
     for entry in data:
         data_dict.append({"dht22_temp": entry.dht22_temp, "dht22_hum": entry.dht22_hum, "lm35": entry.lm35, "time_stamp": entry.time_stamp})
     return jsonify(data_dict)
+
+# app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+# for rule in app.url_map.iter_rules():
+#     print(f"Route: {rule}, Endpoint: {rule.endpoint}")
