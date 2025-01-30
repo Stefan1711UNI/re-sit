@@ -92,4 +92,4 @@ def get_sensor_data():
 #     app.run(debug=True)
 
 # for rule in app.url_map.iter_rules():
-#     print(f"Route: {rule}, Endpoint: {rule.endpoint}")
+#     print(f"Route: {rule}, Endpoint: {rule.endpoint}") 

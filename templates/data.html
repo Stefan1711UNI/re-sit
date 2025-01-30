@@ -12,17 +12,17 @@
 
         <div class="data-card">
             <h2>Outside Temperature</h2>
-            <div id = "outTemp" class="data-value">{{ recived_data.outsideTemp }} °C</div>
+            <div id = "outTemp" class="data-value">{{ received_data.outsideTemp }} °C</div>
         </div>
 
         <div class="data-card">
             <h2>Inside Temperature</h2>
-            <div id = "insideTemp" class="data-value">{{ recived_data.insideTemp }} °C</div>
+            <div id = "insideTemp" class="data-value">{{ received_data.insideTemp }} °C</div>
         </div>
 
         <div class="data-card">
             <h2>Inside Humidity</h2>
-            <div id = "insideHum" class="data-value">{{ recived_data.insideHumidity }} %</div>
+            <div id = "insideHum" class="data-value">{{ received_data.insideHumidity }} %</div>
         </div>
     </div>
 
@@ -31,9 +31,9 @@
             const response = await fetch('/api/data');
             const data = await response.json();
 
-            document.getElementById('outTemp').innerText = `${recived_data.outsideTemp} °C`;
-            document.getElementById('insideTemp').innerText = `${recived_data.insideTemp} °C`;
-            document.getElementById('insideHum').innerText = `${recived_data.insideHumidity} %`;
+            document.getElementById('outTemp').innerText = `${received_data.outsideTemp} °C`;
+            document.getElementById('insideTemp').innerText = `${received_data.insideTemp} °C`;
+            document.getElementById('insideHum').innerText = `${received_data.insideHumidity} %`;
         }
         setInterval(fetchSensorData, 5000);
         fetchSensorData();
