@@ -3,86 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensor Data Visualization</title>
+    <title>Graph of data</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container data-page">
-        <h1>Sensor Data Graph</h1>
-        <canvas id="sensorChart"></canvas>
-        <button class="refresh-button" onclick="fetchSensorData()">Refresh Data</button>
+    <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
+        <canvas id="chart1" style="width:100%;max-width:600px"></canvas>
     </div>
-
     <script>
-        async function fetchSensorData() {
-            try {
+        async function getData() {
+            try{
                 const response = await fetch('/get-sensor-data');
                 const data = await response.json();
-                updateChart(data);
+                const response_hours = await fetch('/get_past_time');
+                const hour_mark = await response_hours.json();
+
+                createChart(data, hour_mark);
+
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error getting data:', error);
             }
         }
 
-        function updateChart(sensorData) {
-            const labels = sensorData.map(entry => entry.time_stamp);
-            const tempData = sensorData.map(entry => entry.dht22_temp);
-            const humData = sensorData.map(entry => entry.dht22_hum);
-            const lm35Data = sensorData.map(entry => entry.lm35);
+        function createChart(data, hour_mark){
+            const dht22_temp = data.map(({ dht22_temp }) => dht22_temp);
+            const dht22_hum = data.map(({ dht22_hum }) => dht22_hum);
+            const lm35 = data.map(({ lm35 }) => lm35);
 
-            const ctx = document.getElementById('sensorChart').getContext('2d');
-            if (window.myChart) window.myChart.destroy();
-            window.myChart = new Chart(ctx, {
-                type: 'line',
+            new Chart(document.getElementById("chart1"), {
+                type: "line",
                 data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'DHT22 Temperature',
-                            data: tempData,
-                            borderColor: '#ff6347',
-                            borderWidth: 2,
-                            fill: false
-                        },
-                        {
-                            label: 'DHT22 Humidity',
-                            data: humData,
-                            borderColor: '#1e90ff',
-                            borderWidth: 2,
-                            fill: false
-                        },
-                        {
-                            label: 'LM35 Temperature',
-                            data: lm35Data,
-                            borderColor: '#32cd32',
-                            borderWidth: 2,
-                            fill: false
-                        }
-                    ]
+                    labels: hour_mark,
+                    datasets: [{
+                        label: "Outside Temperature",
+                        data: lm35,
+                        borderColor: "#ff6347",
+                        fill: false
+                    }, {
+                        label: "Inside Temperature",
+                        data: dht22_temp,
+                        borderColor: "#1e90ff",
+                        fill: false
+                    }, {
+                        label: "Inside Humidity",
+                        data: dht22_hum,
+                        borderColor: "#32cd32",
+                        fill: false
+                    }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true }
+                    },
                     scales: {
                         x: {
-                            title: {
-                                display: true,
-                                text: 'Timestamp'
-                            }
+                            title: { display: true, text: 'Hour of the Day' }
                         },
                         y: {
-                            title: {
-                                display: true,
-                                text: 'Value'
-                            }
+                            title: { display: true, text: 'Temprature' }
                         }
                     }
                 }
             });
         }
 
-        fetchSensorData();  // Load data on page load
+        getData();
     </script>
 </body>
 </html>

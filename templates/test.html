@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensor Data Visualization</title>
+    <title>Graph of data</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -16,31 +16,38 @@
             try{
                 const response = await fetch('/get-sensor-data');
                 const data = await response.json();
-                
+                const response_hours = await fetch('/get_past_time');
+                const hour_mark = await response_hours.json();
+
+                createChart(data, hour_mark);
+
             } catch (error) {
                 console.error('Error getting data:', error);
             }
         }
 
-        function createChart(){
-            const time = [1,2,3,4,5,6,7,8,9,10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]; // dummy data
+        function createChart(data, hour_mark){
+            const dht22_temp = data.map(({ dht22_temp }) => dht22_temp);
+            const dht22_hum = data.map(({ dht22_hum }) => dht22_hum);
+            const lm35 = data.map(({ lm35 }) => lm35);
+
             new Chart(document.getElementById("chart1"), {
                 type: "line",
                 data: {
-                    labels: time,
+                    labels: hour_mark,
                     datasets: [{
                         label: "Outside Temperature",
-                        data: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29], // dummy data
+                        data: lm35,
                         borderColor: "#ff6347",
                         fill: false
                     }, {
                         label: "Inside Temperature",
-                        data: [22, 23, 24, 25, 26, 27, 28, 29, 30, 31], // dummy data
+                        data: dht22_temp,
                         borderColor: "#1e90ff",
                         fill: false
                     }, {
                         label: "Inside Humidity",
-                        data: [40, 41, 42, 43, 44, 45, 46, 47, 48, 49], // dummy data
+                        data: dht22_hum,
                         borderColor: "#32cd32",
                         fill: false
                     }]
@@ -48,12 +55,20 @@
                 options: {
                     plugins: {
                         legend: { display: true }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Hour of the Day' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Temprature' }
+                        }
                     }
                 }
             });
         }
 
-        
+        getData();
     </script>
 </body>
 </html>

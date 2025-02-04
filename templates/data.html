@@ -27,14 +27,16 @@
     </div>
 
     <script>
+        //gets the data and updates the page
         async function fetchData() {
-            const response = await fetch('/api/data');
+            const response = await fetch('/live_data');
             const data = await response.json();
 
             document.getElementById('outTemp').innerText = `${received_data.outsideTemp} °C`;
             document.getElementById('insideTemp').innerText = `${received_data.insideTemp} °C`;
             document.getElementById('insideHum').innerText = `${received_data.insideHumidity} %`;
         }
+        //refreshes the page every 5 seconds
         setInterval(fetchSensorData, 5000);
         fetchSensorData();
     </script>
