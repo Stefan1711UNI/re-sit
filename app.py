@@ -35,10 +35,13 @@ def index():
 #live_data page
 @app.route('/live_data')
 def data():
-    return render_template('data.html', received_data=received_data)
+    return render_template('data.html')
 
+@app.route('/get_current_data', methods=['GET'])
+def get_current_data():
+    return jsonify(received_data)
 
-#Placeholder for the received data
+#placeholder for the received data
 received_data = {
     "outsideTemp": 0.0,
     "insideTemp": 0.0,
@@ -46,7 +49,7 @@ received_data = {
 }
 
 #recives data from ardunio and updates the received_data dictionary
-@app.route('/update-data', methods=['POST'])
+@app.route('/update_data', methods=['POST'])
 def update_data():
     global received_data
     data = request.get_json()
@@ -85,7 +88,7 @@ def data_view():
     return render_template('data_view.html')
     
 #gets the data from the database and returns it as a JSON object, only the last 24 hours of data
-@app.route('/get-sensor-data', methods=['GET'])
+@app.route('/get_sensor_data', methods=['GET'])
 def get_sensor_data():
     #get the latest entry by time_stamp
     timeStamp = sensor_data.query.order_by(sensor_data.entry.desc()).first().time_stamp

@@ -7,38 +7,38 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <div class="data-page">
+    <div class="data_page">
         <h1>Live Sensor Data</h1>
 
-        <div class="data-card">
+        <div class="data_card">
             <h2>Outside Temperature</h2>
-            <div id = "outTemp" class="data-value">{{ received_data.outsideTemp }} °C</div>
+            <div id = "outTemp" class="data_value">-- °C</div>
         </div>
 
-        <div class="data-card">
+        <div class="data_card">
             <h2>Inside Temperature</h2>
-            <div id = "insideTemp" class="data-value">{{ received_data.insideTemp }} °C</div>
+            <div id = "insideTemp" class="data_value">-- °C</div>
         </div>
 
-        <div class="data-card">
+        <div class="data_card">
             <h2>Inside Humidity</h2>
-            <div id = "insideHum" class="data-value">{{ received_data.insideHumidity }} %</div>
+            <div id = "insideHum" class="data_value">-- %</div>
         </div>
     </div>
 
     <script>
         //gets the data and updates the page
         async function fetchData() {
-            const response = await fetch('/live_data');
+            const response = await fetch('/get_current_data');
             const data = await response.json();
 
-            document.getElementById('outTemp').innerText = `${received_data.outsideTemp} °C`;
-            document.getElementById('insideTemp').innerText = `${received_data.insideTemp} °C`;
-            document.getElementById('insideHum').innerText = `${received_data.insideHumidity} %`;
+            document.getElementById('outTemp').innerText = `${data.outsideTemp} °C`;
+            document.getElementById('insideTemp').innerText = `${data.insideTemp} °C`;
+            document.getElementById('insideHum').innerText = `${data.insideHumidity} %`;
         }
-        //refreshes the page every 5 seconds
-        setInterval(fetchSensorData, 5000);
-        fetchSensorData();
+        //refreshes the data every 5 seconds
+        setInterval(fetchData, 5000);
+        fetchData();
     </script>
 </body>
 </html>

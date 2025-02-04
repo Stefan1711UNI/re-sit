@@ -14,7 +14,7 @@
     <script>
         async function getData() {
             try{
-                const response = await fetch('/get-sensor-data');
+                const response = await fetch('/get_sensor_data');
                 const data = await response.json();
                 const response_hours = await fetch('/get_past_time');
                 const hour_mark = await response_hours.json();

@@ -36,12 +36,12 @@ li {
 
 
 /*DATA PAGE*/
-.data-page {
+.data_page {
     text-align: center;
     margin-top: 50px;
 }
 
-.data-card {
+.data_card {
     background-color: #1e1e1e;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -52,32 +52,16 @@ li {
     font-size: 18px;
 }
 
-.data-card h2 {
+.data_card h2 {
     color: #ffffff;
     margin-bottom: 15px;
     font-size: 24px;
 }
 
-.data-value {
+.data_value {
     font-size: 28px;
     font-weight: bold;
     color: #1e90ff;
-}
-
-.refresh-button {
-    background-color: #1e90ff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.refresh-button:hover {
-    background-color: #63b8ff;
 }
 
 /*data view page*/
@@ -91,11 +75,8 @@ li {
     margin: 0 auto;
     padding: 20px;
 }
-.data-page {
+.data_page {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.refresh-button {
-    margin-top: 20px;
 }
