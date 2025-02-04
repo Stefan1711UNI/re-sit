@@ -86,6 +86,17 @@ def get_sensor_data():
         data_dict.append({"dht22_temp": entry.dht22_temp, "dht22_hum": entry.dht22_hum, "lm35": entry.lm35, "time_stamp": entry.time_stamp})
     return jsonify(data_dict)
 
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
+def get_past_time():
+    time = db.execute("SELECT time_stamp FROM sensor_data ORDER BY entry DESC LIMIT 1")
+    print(time)
+    hour = time.time().hour()
+    minute = time.time().minute()
+    
+
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # if __name__ == '__main__':
