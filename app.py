@@ -62,9 +62,9 @@ def update_data():
     received_data.update(data)
 
     #extract the data
-    dht22_temp = data['dht22_temp']
-    dht22_hum = data['dht22_hum']
-    lm35 = data['lm35']
+    dht22_temp = data['insideTemp']
+    dht22_hum = data['insideHumidity']
+    lm35 = data['outsideTemp']
 
     if not all([dht22_temp, dht22_hum, lm35]):
         return jsonify({"error": "Missing required data"}), 400
