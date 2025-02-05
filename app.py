@@ -119,11 +119,6 @@ def get_sensor_data():
     return jsonify(validEntries)
 
 
-@app.route('/test')
-def test():
-    return render_template('test.html')
-
-
 #gets the last 24 hours in hour intervals
 @app.route('/get_past_time', methods=['GET'])
 def get_past_time():
