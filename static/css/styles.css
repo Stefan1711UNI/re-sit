@@ -37,7 +37,7 @@ li {
 }
 
 
-/*DATA PAGE*/
+/*live data page*/
 .data_page {
     text-align: center;
     margin-top: 50px;
@@ -95,7 +95,7 @@ li {
     height: 500px;
 }
 
-/* NAVIGATION BAR */
+/*navigation bar*/
 .navbar {
     background-color: #1e1e1e;
     padding: 15px 20px;

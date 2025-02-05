@@ -20,6 +20,7 @@ class sensor_data(db.Model):
     lm35 = db.Column(db.Integer, nullable=False)
     time_stamp = db.Column(db.String(16), nullable=False)
 
+    #creates a string representation of the object
     def __repr__(self):
         return f"<Data {self.entry}, DHT22_temp: {self.dht22_temp}, DHT22_hum: {self.dht22_hum}, LM35: {self.lm35}, Time: {self.time_stamp}>"
 
